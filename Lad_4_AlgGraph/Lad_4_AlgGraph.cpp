@@ -36,9 +36,6 @@ void PrimKrus()
 	size = EntrEdge(size, 2, INT_MAX);
 
 	vector<vector<int>> Graph(size, vector<int>(size));
-	/*int** Graph = new int* [size];
-	for (int i = 0; i < size; i++)
-		Graph[i] = new int[size];*/
 	int* Colour = new int[size];
 
 	for (int i = 0; i < size; i++)
@@ -91,7 +88,8 @@ void PrimKrus()
 void AlgPrKr(vector<vector<int>> Graph)
 {
 	int size = Graph.size();
-	int* Colour = new int[size];
+	int sum = 0;
+	int* Colour = new int[size-1];
 	vector<vector<int>> OstTree(3, vector<int>(size));
 	/*int** OstTree = new int* [3];
 	for (int i = 0; i < 3; i++)
@@ -101,10 +99,10 @@ void AlgPrKr(vector<vector<int>> Graph)
 		Colour[i] = i + 1;
 	}
 
-	for (int k = 0; k < size; k++)
+	for (int k = 0; k < size-1; k++)
 	{
-		int iMin = 0, jMin = 1;
-		while (Colour[iMin] != Colour[jMin])
+		int iMin = 0, jMin = 1, c = 0;
+		while (c == 0)
 		{
 			for (int i = 0; i < size; i++)
 			{
@@ -114,28 +112,34 @@ void AlgPrKr(vector<vector<int>> Graph)
 					{
 						iMin = i;
 						jMin = j;
-						cout << "in if i,j = " << i << "," << j << endl;
 					}
 				}
 			}
-			Colour[iMin] = Colour[jMin];
-			cout << "colour " << Colour[iMin] << endl;
-			OstTree[0][k] = Graph[iMin][jMin];
-			OstTree[1][k] = iMin;
-			OstTree[2][k] = jMin;
 
-			Graph[iMin][jMin] = INT_MAX;
+			if (Colour[iMin] != Colour[jMin])
+			{
+				Colour[iMin] = Colour[jMin];
+				OstTree[0][k] = Graph[iMin][jMin];
+				OstTree[1][k] = iMin;
+				OstTree[2][k] = jMin;
+
+				Graph[iMin][jMin] = INT_MAX;
+				c++;
+			}
+			
 		}
 	}
-	cout << "Macciv Colour\n";
+	/*cout << "Macciv Colour\n";
 	for (int i = 0; i < size; i++)
 	{
 		cout << Colour[i] << " ";
-	}
+	}*/
 	cout << "\n Оставное дерево\n";
-	for (int i = 0; i < size; i++)
+	for (int i = 0; i < size - 1; i++)
 	{
-		cout << OstTree[1][i] << " -> " << OstTree[2][i] << " size: " << OstTree[0][i];
+		cout << OstTree[1][i] + 1 << " -> " << OstTree[2][i] + 1 << " size: " << OstTree[0][i];
 		cout << endl;
+		sum += OstTree[0][i];
 	}
+	cout << "Сумма рёбер остовного дерева: \n" << sum;
 }
