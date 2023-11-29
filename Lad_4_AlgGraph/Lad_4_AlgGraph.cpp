@@ -1,17 +1,15 @@
-﻿/*Кураева А.В. 22ПМ
-Лабораторная №4 Алгоритмы на графах*/
+/*Кураева А.В. 22ПМ
+Лабораторная 4, Алгоритмы на графах*/
 
 #include <iostream>
 #include <vector>
 
 using namespace std;
 
-int size;
-
 void PrimKrus();
 void AlgPrKr(vector<vector<int>> Graph);
 
-int EntrEdge(int x, int l, int r) //Ф-я проверки на допустимость значений
+int EntrEdge(int x, int l, int r) //Checking the validity of values
 {
 	cin >> x;
 	while (x < l || x > r)
@@ -91,9 +89,7 @@ void AlgPrKr(vector<vector<int>> Graph)
 	int sum = 0;
 	int* Colour = new int[size-1];
 	vector<vector<int>> OstTree(3, vector<int>(size));
-	/*int** OstTree = new int* [3];
-	for (int i = 0; i < 3; i++)
-		OstTree[i] = new int[size];*/
+	
 	for (int i = 0; i < size; i++)
 	{
 		Colour[i] = i + 1;
@@ -129,12 +125,7 @@ void AlgPrKr(vector<vector<int>> Graph)
 			
 		}
 	}
-	/*cout << "Macciv Colour\n";
-	for (int i = 0; i < size; i++)
-	{
-		cout << Colour[i] << " ";
-	}*/
-	cout << "\n Оставное дерево\n";
+	cout << "\n Остовное дерево\n";
 	for (int i = 0; i < size - 1; i++)
 	{
 		cout << OstTree[1][i] + 1 << " -> " << OstTree[2][i] + 1 << " size: " << OstTree[0][i];
